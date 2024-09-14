@@ -1,0 +1,49 @@
+-- Create the User table
+CREATE TABLE User (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  firstname VARCHAR(255) NOT NULL,
+  lastname VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  forgotPasswordToken VARCHAR(255) UNIQUE,
+  forgotPasswordTokenExpiry DATETIME,
+  verifyToken VARCHAR(255) UNIQUE,
+  verifyTokenExpiry DATETIME,
+  isVerified BOOLEAN DEFAULT false,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Create the UserInfo table
+CREATE TABLE UserInfo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userId INT UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) NOT NULL,
+  role VARCHAR(255) DEFAULT 'USER',
+  FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+);
+
+-- Create the Appointment table
+CREATE TABLE Appointment (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  userId INT NOT NULL,
+  patientName VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phoneNumber VARCHAR(255) NOT NULL,
+  department VARCHAR(255) NOT NULL,
+  additionalInfo TEXT,
+  status ENUM('PENDING', 'ACCEPTED', 'REJECTED') DEFAULT 'PENDING',
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+);
+
+-- Create the AppointmentInfo table
+CREATE TABLE AppointmentInfo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  appointmentId INT UNIQUE NOT NULL,
+  date VARCHAR(255),
+  additionalInfo TEXT NOT NULL,
+  doctorName VARCHAR(255) NOT NULL,
+  FOREIGN KEY (appointmentId) REFERENCES Appointment(id) ON DELETE CASCADE
+);
