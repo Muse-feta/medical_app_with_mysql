@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import pool from "@/dbconfig/dbconfig";
 
 export const PUT = async (
   req: NextRequest,
@@ -11,29 +9,32 @@ export const PUT = async (
     const { id } = params;
 
     // Fetch the current user role
-    const user = await prisma.userInfo.findUnique({
-      where: { userId: Number(id) },
-      select: { role: true },
-    });
+    const [userRows]: any[] = await pool.query(
+      "SELECT role FROM UserInfo WHERE userId = ?",
+      [Number(id)]
+    );
 
-    if (!user) {
+    if (userRows.length === 0) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
+    const currentRole = userRows[0].role;
+
     // Toggle the role
-    const newRole = user.role === "ADMIN" ? "USER" : "ADMIN";
+    const newRole = currentRole === "ADMIN" ? "USER" : "ADMIN";
 
     // Update the user role
-    const updatedUser = await prisma.userInfo.update({
-      where: { userId: Number(id) },
-      data: { role: newRole },
-    });
+    await pool.query("UPDATE userInfo SET role = ? WHERE userId = ?", [
+      newRole,
+      Number(id),
+    ]);
 
     return NextResponse.json(
-      { message: "User role updated", user: updatedUser },
+      { message: "User role updated", role: newRole },
       { status: 200 }
     );
   } catch (error: any) {
+    console.error(error);
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 };

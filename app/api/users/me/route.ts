@@ -1,37 +1,57 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
-
-const prisma = new PrismaClient();
-
+const pool = require("@/dbconfig/dbconfig");
 
 export const GET = async (req: NextRequest) => {
+  try {
+    // Get the user data from token
+    const userData = await getDataFromToken(req);
+    const userId = userData.id;
+    console.log("id from me route", userId);
 
-   
+    // MySQL Transaction Simulation
+    const connection = await pool.getConnection();
     try {
-      // const body = await req.json();
-      const userData = await getDataFromToken(req);
-      const userId = userData.id;
-      console.log("id from me route", userId);
-      const user = await prisma.$transaction(async (prisma) => {
-        const user = await prisma.user.findUnique({
-          where: {
-            id: userId,
-          },
-        });
+      await connection.beginTransaction();
 
-        const userInfo = await prisma.userInfo.findUnique({
-          where: {
-            userId: userId,
-          },
-        });
+      // Find the user
+      const [userRows]: any[] = await connection.query(
+        "SELECT * FROM users WHERE id = ?",
+        [userId]
+      );
+      if (userRows.length === 0) {
+        throw new Error("User not found");
+      }
+      const user = userRows[0];
 
-        return { user, userInfo };
+      // Find user info
+      const [userInfoRows]: any[] = await connection.query(
+        "SELECT * FROM userInfo WHERE userId = ?",
+        [userId]
+      );
+      const userInfo = userInfoRows.length > 0 ? userInfoRows[0] : null;
+
+      // Commit the transaction
+      await connection.commit();
+
+      // Return the user data
+      return NextResponse.json({
+        success: true,
+        status: 200,
+        data: { user, userInfo },
       });
-
-      return NextResponse.json({ success: true, status: 200, data: user });
-    } catch (error) {
-        // console.log("error occuring in me route", error);
-        return NextResponse.json({ success: false, status: 500, message: "Something went wrong" });
+    } catch (transactionError) {
+      await connection.rollback();
+      throw transactionError;
+    } finally {
+      connection.release(); // Release the connection back to the pool
     }
-}
+  } catch (error: any) {
+    console.error("Error in me route", error);
+    return NextResponse.json({
+      success: false,
+      status: 500,
+      message: "Something went wrong",
+    });
+  }
+};

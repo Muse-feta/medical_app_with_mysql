@@ -1,26 +1,50 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import pool from "@/dbconfig/dbconfig"; // Your MySQL connection config
 
 export const GET = async (req: NextRequest) => {
   try {
-    const users = await prisma.user.findMany();
-    const userInfo = await prisma.userInfo.findMany();
+    // Create a connection to the database
+    const connection = await pool.getConnection();
 
-    // Combine user and userInfo data, assuming userInfo is correctly indexed
-    const usersWithInfo = users.map((user, index) => ({
-      ...user,
-      ...userInfo[index],
-    }));
+    try {
+      // Fetch all users
+      const [users]: any[] = await connection.query("SELECT * FROM user");
 
-    return NextResponse.json({
-      success: true,
-      status: 200,
-      data: usersWithInfo,
-    });
+      // Fetch all user info
+      const [userInfoList]: any[] = await connection.query(
+        "SELECT * FROM userInfo"
+      );
+
+      // Create a map of userInfo by userId for quick lookup
+      const userInfoMap = userInfoList.reduce((map: any, userInfo: any) => {
+        map[userInfo.userId] = userInfo;
+        return map;
+      }, {});
+
+      // Combine user and userInfo data
+      const usersWithInfo = users.map((user: any) => ({
+        ...user,
+        ...userInfoMap[user.id],
+      }));
+
+      return NextResponse.json({
+        success: true,
+        status: 200,
+        data: usersWithInfo,
+      });
+    } catch (error: any) {
+      console.error("Error fetching users:", error);
+      return NextResponse.json({
+        success: false,
+        message: error.message,
+        status: 500,
+      });
+    } finally {
+      // Release the connection back to the pool
+      connection.release();
+    }
   } catch (error: any) {
-    console.error("Error fetching users:", error);
+    console.error("Error creating connection:", error);
     return NextResponse.json({
       success: false,
       message: error.message,

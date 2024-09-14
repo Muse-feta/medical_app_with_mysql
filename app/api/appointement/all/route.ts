@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import pool from "@/dbconfig/dbconfig";
 
 export const GET = async (req: NextRequest) => {
   try {
-    const appointments = await prisma.appointment.findMany();
+    // Fetch all appointments from the database
+    const [appointmentsRows]: any[] = await pool.query(
+      "SELECT * FROM Appointment"
+    );
+
     return NextResponse.json({
       success: true,
       status: 200,
-      data: appointments,
+      data: appointmentsRows,
     });
   } catch (error: any) {
     console.error(error); // Log the error for debugging

@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-
-const prisma = new PrismaClient();
+import pool from "@/dbconfig/dbconfig";
 
 export const PUT = async (
   req: NextRequest,
@@ -11,33 +8,44 @@ export const PUT = async (
   try {
     const body = await req.json();
     const { id } = params;
-    // console.log("body", body, id);
+    const status = body.status;
 
-  const appointment = await prisma.$transaction(async (prisma) => {
-      const appointment = await prisma.appointment.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          status: body.status,
-        },
+    // Start a transaction
+    const connection = await pool.getConnection();
+    try {
+      await connection.beginTransaction();
+
+      // Update appointment status
+      await connection.query("UPDATE Appointment SET status = ? WHERE id = ?", [
+        status,
+        Number(id),
+      ]);
+
+      // Delete related appointment info
+      await connection.query(
+        "DELETE FROM AppointmentInfo WHERE appointmentId = ?",
+        [Number(id)]
+      );
+
+      // Commit the transaction
+      await connection.commit();
+
+      // Release the connection
+      connection.release();
+
+      return NextResponse.json({
+        success: true,
+        status: 200,
+        data: { id, status },
       });
-
-      const appStatus = await prisma.appointmentInfo.deleteMany({
-        where: {
-          appointmentId: Number(id),
-        },
-      })
-      return {
-        appointment,
-        appStatus,
-      };
-    });
-
-
-
-    return NextResponse.json({ success: true, status: 200, data: appointment });
+    } catch (transactionError) {
+      // Rollback the transaction if an error occurs
+      await connection.rollback();
+      connection.release();
+      throw transactionError;
+    }
   } catch (error: any) {
-    NextResponse.json({ message: error.message }, { status: 500 });
+    console.error(error); // Log the error for debugging
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 };

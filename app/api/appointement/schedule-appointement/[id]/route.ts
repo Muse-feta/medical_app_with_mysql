@@ -1,8 +1,6 @@
 import { appointmentEmail } from "@/helpers/appointmentEmail";
-import { PrismaClient } from "@prisma/client";
+import pool from "@/dbconfig/dbconfig";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export const POST = async (
   req: NextRequest,
@@ -11,33 +9,35 @@ export const POST = async (
   try {
     const body = await req.json();
     const { id } = params;
+    const { date, ...appointmentInfo } = body;
 
-    const appointment = await prisma.$transaction(async (prisma) => {
-      const appointment = await prisma.appointmentInfo.create({
-        data: {
-          ...body,
-          appointmentId: Number(id),
-        },
-      });
-      const appStatus = await prisma.appointment.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          status: "ACCEPTED",
-        },
-      });
+    // Start a transaction
+    const connection = await pool.getConnection();
+    await connection.beginTransaction();
 
-      const appInfo = await prisma.appointment.findUnique({
-        where: {
-          id: Number(id),
-        },
-      });
+    try {
+      // Insert new appointment info
+      const [insertResult]: any[] = await connection.query(
+        "INSERT INTO AppointmentInfo SET ?",
+        { ...appointmentInfo, appointmentId: Number(id) }
+      );
+
+      // Update appointment status to 'ACCEPTED'
+      const [updateResult]: any[] = await connection.query(
+        "UPDATE Appointment SET status = ? WHERE id = ?",
+        ["ACCEPTED", Number(id)]
+      );
+
+      // Fetch appointment details
+      const [appointmentRows]: any[] = await connection.query(
+        "SELECT email, patientName FROM Appointment WHERE id = ?",
+        [Number(id)]
+      );
+      const appointment = appointmentRows[0];
 
       // Check if email and patientName are defined before sending an email
-      const email = appInfo?.email;
-      const patientName = appInfo?.patientName;
-      const date = body.date;
+      const email = appointment?.email;
+      const patientName = appointment?.patientName;
 
       if (email && patientName && date) {
         // Send email to patient
@@ -45,21 +45,25 @@ export const POST = async (
       } else {
         console.error("Email or patient name is missing, email not sent.");
       }
-      return {
-        appointment,
-        appStatus,
-      };
-    })
 
-    
+      // Commit the transaction
+      await connection.commit();
 
-    return NextResponse.json({ success: true, status: 200, data: appointment });
-
-    
-
+      return NextResponse.json({
+        success: true,
+        status: 200,
+        data: insertResult,
+      });
+    } catch (transactionError) {
+      // Rollback the transaction in case of error
+      await connection.rollback();
+      throw transactionError;
+    } finally {
+      // Release the connection back to the pool
+      connection.release();
+    }
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 };
-

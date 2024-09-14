@@ -1,51 +1,50 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import pool from "@/dbconfig/dbconfig"; // Your MySQL connection config
 
-const prisma = new PrismaClient();
+export const POST = async (req: NextRequest) => {
+  const body = await req.json();
+  const { token } = body;
+  console.log(token);
 
-export const POST = async(req: NextRequest) => {
-    const body = await req.json();
-    const { token } = body;
-    console.log(token)
-    try {
-      const user = await prisma.user.findFirst({
-        where: {
-          forgotPasswordToken: token,
-        },
-      });
+  const connection = await pool.getConnection();
+  try {
+    // Find the user with the provided forgotPasswordToken
+    const [rows]: any[] = await connection.query(
+      "SELECT * FROM user WHERE forgotPasswordToken = ?",
+      [token]
+    );
 
-      if (!user) {
-        return NextResponse.json({
-          success: false,
-          status: 400,
-          message: "Invalid token",
-        });
-      }
-
-      // updating user verification token
-      await prisma.user.update({
-        where: {
-          forgotPasswordToken: token,
-        },
-        data: {
-          forgotPasswordToken: null,
-          forgotPasswordTokenExpiry: null,
-        },
-      });
-
+    if (rows.length === 0) {
       return NextResponse.json({
-        success: true,
-        status: 200,
-        message: "Token verified",
-        userId: user.id,
+        success: false,
+        status: 400,
+        message: "Invalid token",
       });
-    } catch (error) {
-        console.log(error);
-
-        return NextResponse.json({
-            success: false,
-            status: 500,
-            message: "Something went wrong"
-        })
     }
-}
+
+    const user = rows[0];
+
+    // Update the user's forgotPasswordToken and forgotPasswordTokenExpiry
+    await connection.query(
+      "UPDATE user SET forgotPasswordToken = NULL, forgotPasswordTokenExpiry = NULL WHERE forgotPasswordToken = ?",
+      [token]
+    );
+
+    return NextResponse.json({
+      success: true,
+      status: 200,
+      message: "Token verified",
+      userId: user.id,
+    });
+  } catch (error: any) {
+    console.log(error);
+
+    return NextResponse.json({
+      success: false,
+      status: 500,
+      message: "Something went wrong",
+    });
+  } finally {
+    connection.release(); // Release the connection back to the pool
+  }
+};

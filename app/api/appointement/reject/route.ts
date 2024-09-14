@@ -1,26 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import pool from "@/dbconfig/dbconfig";
 
 export const GET = async (req: NextRequest) => {
   try {
-    const appointments = await prisma.appointment.findMany({
-      where: {
-        status: "REJECTED",
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    // Query to get appointments with status 'REJECTED' ordered by creation date in descending order
+    const [appointmentsRows]: any[] = await pool.query(
+      "SELECT * FROM Appointment WHERE status = ? ORDER BY createdAt DESC",
+      ["REJECTED"]
+    );
+
     return NextResponse.json({
       success: true,
       status: 200,
-      data: appointments,
+      data: appointmentsRows,
     });
   } catch (error: any) {
     console.error(error); // Log the error for debugging
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 };
-

@@ -1,34 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient, status } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import pool from "@/dbconfig/dbconfig";
 
 export const GET = async () => {
   try {
-    // first get all the users
-    const users = await prisma.user.findMany();
+    // Get all users
+    const [usersRows]: any[] = await pool.query("SELECT * FROM User");
 
-    // get new users in the last 30 days
-    const newUsersLast30Days = users.filter((user) => {
-      const createdAt = new Date(user.createdAt);
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      return createdAt > thirtyDaysAgo;
-    });
+    // Get new users in the last 30 days
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const formattedDate = thirtyDaysAgo.toISOString().split("T")[0]; // YYYY-MM-DD format
 
-    // get all appointments
-    const appointments = await prisma.appointment.findMany();
+    const [newUsersRows]: any[] = await pool.query(
+      "SELECT * FROM User WHERE createdAt >= ?",
+      [formattedDate]
+    );
 
-    // get all active appointments
-    const activeAppointments = appointments.filter((appointment) => {
-      return status[appointment.status] === "PENDING";
-    });
+    // Get all appointments
+    const [appointmentsRows]: any[] = await pool.query(
+      "SELECT * FROM Appointment"
+    );
+
+    // Get all active appointments
+    const [activeAppointmentsRows]: any[] = await pool.query(
+      "SELECT * FROM Appointment WHERE status = 'PENDING'"
+    );
 
     const cardInfo = {
-      totalUsers: users.length,
-      newUsersLast30Days: newUsersLast30Days.length,
-      totalAppointments: appointments.length,
-      activeAppointments: activeAppointments.length,
+      totalUsers: usersRows.length,
+      newUsersLast30Days: newUsersRows.length,
+      totalAppointments: appointmentsRows.length,
+      activeAppointments: activeAppointmentsRows.length,
     };
 
     return NextResponse.json(cardInfo);
