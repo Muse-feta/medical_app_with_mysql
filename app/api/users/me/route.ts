@@ -1,40 +1,57 @@
 import { NextRequest, NextResponse } from "next/server";
+import pool from "@/dbconfig/dbconfig";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
-const pool = require("@/dbconfig/dbconfig");
 
 export const GET = async (req: NextRequest) => {
   try {
-    // Get the user data from token
+    // Get user data from token
     const userData = await getDataFromToken(req);
     const userId = userData.id;
-    console.log("id from me route", userId);
 
-    // MySQL Transaction Simulation
+    // Start MySQL transaction manually
     const connection = await pool.getConnection();
     try {
       await connection.beginTransaction();
 
-      // Find the user
+      // Fetch user data
       const [userRows]: any[] = await connection.query(
-        "SELECT * FROM users WHERE id = ?",
+        "SELECT * FROM User WHERE id = ?",
         [userId]
       );
+
       if (userRows.length === 0) {
-        throw new Error("User not found");
+        return NextResponse.json({
+          success: false,
+          status: 404,
+          message: "User not found",
+        });
       }
+
       const user = userRows[0];
 
-      // Find user info
+      // Fetch userInfo data
       const [userInfoRows]: any[] = await connection.query(
-        "SELECT * FROM userInfo WHERE userId = ?",
+        "SELECT * FROM UserInfo WHERE userId = ?",
         [userId]
       );
-      const userInfo = userInfoRows.length > 0 ? userInfoRows[0] : null;
+
+      if (userInfoRows.length === 0) {
+        return NextResponse.json({
+          success: false,
+          status: 404,
+          message: "User info not found",
+        });
+      }
+
+      const userInfo = userInfoRows[0];
 
       // Commit the transaction
       await connection.commit();
 
-      // Return the user data
+      // Close the connection
+      connection.release();
+
+      // Return user and userInfo data
       return NextResponse.json({
         success: true,
         status: 200,
@@ -42,12 +59,16 @@ export const GET = async (req: NextRequest) => {
       });
     } catch (transactionError) {
       await connection.rollback();
-      throw transactionError;
-    } finally {
-      connection.release(); // Release the connection back to the pool
+      connection.release();
+      console.error(transactionError);
+      return NextResponse.json({
+        success: false,
+        status: 500,
+        message: "Transaction failed",
+      });
     }
-  } catch (error: any) {
-    console.error("Error in me route", error);
+  } catch (error) {
+    console.error(error);
     return NextResponse.json({
       success: false,
       status: 500,

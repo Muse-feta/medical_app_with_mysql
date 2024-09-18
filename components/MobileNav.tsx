@@ -49,7 +49,7 @@ const MobileNav = (props: Props) => {
           <nav className="mt-20">
             <ul className=" list-none gap-5 text-black">
               <li className="">
-                <Link href="home-medical-clinic.html">Home</Link>
+                <Link href="/">Home</Link>
               </li>
               <li className="mt-2">
                 <Link href="/about">About Us</Link>

@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
     try {
       // Update password in the database
       const result = await connection.query(
-        "UPDATE userInfo SET password = ? WHERE userId = ?",
+        "UPDATE UserInfo SET password = ? WHERE userId = ?",
         [hashedPassword, userId]
       );
 

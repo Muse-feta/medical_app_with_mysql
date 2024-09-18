@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
   try {
     // Find the user with the provided forgotPasswordToken
     const [rows]: any[] = await connection.query(
-      "SELECT * FROM user WHERE forgotPasswordToken = ?",
+      "SELECT * FROM User WHERE forgotPasswordToken = ?",
       [token]
     );
 
@@ -26,7 +26,7 @@ export const POST = async (req: NextRequest) => {
 
     // Update the user's forgotPasswordToken and forgotPasswordTokenExpiry
     await connection.query(
-      "UPDATE user SET forgotPasswordToken = NULL, forgotPasswordTokenExpiry = NULL WHERE forgotPasswordToken = ?",
+      "UPDATE User SET forgotPasswordToken = NULL, forgotPasswordTokenExpiry = NULL WHERE forgotPasswordToken = ?",
       [token]
     );
 

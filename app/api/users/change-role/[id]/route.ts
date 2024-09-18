@@ -24,7 +24,7 @@ export const PUT = async (
     const newRole = currentRole === "ADMIN" ? "USER" : "ADMIN";
 
     // Update the user role
-    await pool.query("UPDATE userInfo SET role = ? WHERE userId = ?", [
+    await pool.query("UPDATE UserInfo SET role = ? WHERE userId = ?", [
       newRole,
       Number(id),
     ]);

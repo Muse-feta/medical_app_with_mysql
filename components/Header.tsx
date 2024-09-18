@@ -21,7 +21,9 @@ console.log("isLogedIn", isLogedIn);
     <header className=" top-0 sticky w-full border-b z-10 bg-white shadow-md">
       <div className="h-16 lg:h-24 flex justify-between mx-5">
         {/* desktop and mobile */}
-        <Image src={logo} alt="logo" width={100} height={100} />
+        <Link className="mt-3 lg:mt-8" href="/">
+          <Image src={logo} alt="logo" width={100} height={100} />
+        </Link>
         <div className="flex justify-end">
           {/* desktop */}
           <MainNav />

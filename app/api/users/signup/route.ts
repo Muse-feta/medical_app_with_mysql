@@ -12,7 +12,7 @@ export const POST = async (req: NextRequest) => {
     try {
       // Check if user already exists
       const [existingUser]: any[] = await connection.query(
-        "SELECT * FROM user WHERE email = ?",
+        "SELECT * FROM User WHERE email = ?",
         [email]
       );
 
@@ -33,7 +33,7 @@ export const POST = async (req: NextRequest) => {
 
       // Insert into the user table
       const [userResult]: any[] = await connection.query(
-        "INSERT INTO user (firstname, lastname, email) VALUES (?, ?, ?)",
+        "INSERT INTO User (firstname, lastname, email) VALUES (?, ?, ?)",
         [firstname, lastname, email]
       );
 
@@ -41,7 +41,7 @@ export const POST = async (req: NextRequest) => {
 
       // Insert into the userInfo table
       await connection.query(
-        "INSERT INTO userInfo (userId, password, phone) VALUES (?, ?, ?)",
+        "INSERT INTO UserInfo (userId, password, phone) VALUES (?, ?, ?)",
         [userId, hashedPassword, phone]
       );
 

@@ -8,11 +8,11 @@ export const GET = async (req: NextRequest) => {
 
     try {
       // Fetch all users
-      const [users]: any[] = await connection.query("SELECT * FROM user");
+      const [users]: any[] = await connection.query("SELECT * FROM User");
 
       // Fetch all user info
       const [userInfoList]: any[] = await connection.query(
-        "SELECT * FROM userInfo"
+        "SELECT * FROM UserInfo"
       );
 
       // Create a map of userInfo by userId for quick lookup

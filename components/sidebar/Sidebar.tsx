@@ -44,7 +44,7 @@ const Sidebar = (props: Props) => {
           },
           {
             title: "Users",
-            label: "9",
+            // label: "9",
             href: "/admin/dashboard/users",
             icon: Users,
             variant: "ghost",

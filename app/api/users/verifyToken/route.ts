@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
   try {
     // Check if the token is valid
     const [rows]: any[] = await connection.query(
-      "SELECT * FROM user WHERE verifyToken = ?",
+      "SELECT * FROM User WHERE verifyToken = ?",
       [token]
     );
 
@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest) => {
 
     // Updating user verification token and status
     await connection.query(
-      "UPDATE user SET verifyToken = NULL, verifyTokenExpiry = NULL, isVerified = TRUE WHERE verifyToken = ?",
+      "UPDATE User SET verifyToken = NULL, verifyTokenExpiry = NULL, isVerified = TRUE WHERE verifyToken = ?",
       [token]
     );
 

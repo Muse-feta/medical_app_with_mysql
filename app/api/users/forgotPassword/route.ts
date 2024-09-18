@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
 
     // Find the user by email
     const [userRows]: any[] = await pool.query(
-      "SELECT * FROM users WHERE email = ?",
+      "SELECT * FROM User WHERE email = ?",
       [email]
     );
 

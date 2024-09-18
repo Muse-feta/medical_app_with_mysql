@@ -12,7 +12,7 @@ export const POST = async (req: NextRequest) => {
     try {
       // Find the user by email
       const [userRows]: any[] = await connection.query(
-        "SELECT * FROM users WHERE email = ?",
+        "SELECT * FROM User WHERE email = ?",
         [email]
       );
 
@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
 
       // Reset verification token
       await connection.query(
-        "UPDATE users SET verifyToken = NULL, verifyTokenExpiry = NULL WHERE id = ?",
+        "UPDATE User SET verifyToken = NULL, verifyTokenExpiry = NULL WHERE id = ?",
         [userId]
       );
 
