@@ -20,8 +20,12 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("/api/users/me");
-        const user = response.data;
+        // const response = await axios.get("/api/users/me");
+        const res = await fetch("/api/users/me",{
+          cache: "no-store"
+        });
+        const response = await res.json();
+        const user = response;
         console.log("user", user);
         const userInfo: userInfo = {
           userId: user.data.userInfo.userId,

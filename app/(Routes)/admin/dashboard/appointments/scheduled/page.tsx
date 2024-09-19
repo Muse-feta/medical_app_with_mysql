@@ -108,13 +108,15 @@ const DashboardOrders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/appointement/scheduled`, {
-          headers: {
-            "Cache-Control": "no-store", // Disable caching
-          },
-        });
-        console.log("res", res.data.data);
-        setData(res.data.data);
+        const result = await fetch(
+          `/api/appointement/scheduled`,
+          {
+            cache: "no-store",
+          }
+        )
+        const res = await result.json()
+        // console.log("res", res.data.data);
+        setData(res.data);
       } catch (error) {
         console.log("Error", error);
       }

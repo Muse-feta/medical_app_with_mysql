@@ -16,35 +16,36 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/card-info`, {
-          headers: {
-            "Cache-Control": "no-store", // Disable caching
-          },
-        });
+        // const res = await axios.get(`/api/card-info`);
+        const result = await fetch(`/api/card-info`, {
+          cache: "no-store",
+        })
+        const res = await result.json();
+        console.log("res for cards", res);
         setCardData([
           {
             label: "Total Users",
             description: "Total number of users",
             icon: Users,
-            amount: `${res.data.totalUsers}`,
+            amount: `${res.totalUsers}`,
           },
           {
             label: "New Users",
             description: "New users added in the last month",
             icon: Users,
-            amount: `${res.data.newUsersLast30Days}`,
+            amount: `${res.newUsersLast30Days}`,
           },
           {
             label: "Appointments",
             description: "Total number of appointments",
             icon: AppWindow,
-            amount: `${res.data.totalAppointments}`,
+            amount: `${res.totalAppointments}`,
           },
           {
             label: "Active Appointments",
             description: "Total number of active appointments",
             icon: MonitorDot,
-            amount: `${res.data.totalUsers}`,
+            amount: `${res.totalUsers}`,
           },
         ]);
       } catch (error) {
@@ -54,11 +55,7 @@ const Dashboard = () => {
 
     const fetchRecentData = async () => {
       try {
-        const res = await axios.get(`/api/appointement/recent-appointement`, {
-          headers: {
-            "Cache-Control": "no-store", // Disable caching
-          },
-        });
+        const res = await axios.get(`/api/appointement/recent-appointement`);
         setRecentData(res.data.data);
       } catch (error) {
         console.log("Error", error);

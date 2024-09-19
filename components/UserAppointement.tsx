@@ -33,14 +33,14 @@ const UserAppointement =  (props: Props) => {
     const fetchData = async () => {
       try {
           if(userId) {
-             const res = await axios.get(`/api/appointement/${userId}`, {
-               headers: {
-                 "Cache-Control": "no-store", // Disable caching
-               },
-             });
+             const result = await fetch(`/api/appointement/${userId}`, {
+               cache: "no-store",
+             })
+
+             const res = await result.json();
              console.log("res", res.data.data);
 
-             setData(res.data.data);
+             setData(res.data);
           }
 
       } catch (error) {
