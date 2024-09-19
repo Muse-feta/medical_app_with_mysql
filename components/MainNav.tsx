@@ -14,12 +14,13 @@ import { ChevronsDown, CircleUser } from 'lucide-react';
 type Props = {}
 
 const MainNav = (props: Props) => {
-   const { isLogedIn,isAdmin, userData } = useAuth();
+   const { isLogedIn, isAdmin, userData, setIsLogedIn } = useAuth();
   //  console.log("isLogedIn", isLogedIn);
   //  console.log("isAdmin", isAdmin);
   //  console.log("userData", userData);
    const handleLogout = async () => {
-     await axios.get("/api/users/logout");
+     await axios.get("/api/users/logout")
+     setIsLogedIn(false);
      toast.success('Logout successfully')
      window.location.reload();
    };
