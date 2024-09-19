@@ -58,7 +58,7 @@ const DashboardUsers: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetch("/api/user", {
+        const result = await fetch("/api/users", {
           cache: "no-store",
         })
         const res = await result.json();

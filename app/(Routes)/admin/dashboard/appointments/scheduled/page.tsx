@@ -112,7 +112,7 @@ const DashboardOrders = () => {
         const result = await fetch(
           `/api/appointement/scheduled`,
           {
-            cache: "no-store",
+            cache: "no-store"
           }
         )
         const res = await result.json()
