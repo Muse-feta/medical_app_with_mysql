@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import Card from "@/components/Card";
 import CardContainer from "@/components/CardContainer";
 import BarChart from "@/components/ui/BarChart";

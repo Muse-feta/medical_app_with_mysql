@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import { ColumnDef } from "@tanstack/react-table";
 import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";

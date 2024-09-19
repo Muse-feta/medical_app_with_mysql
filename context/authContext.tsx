@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 // import { children } from "@/types/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
