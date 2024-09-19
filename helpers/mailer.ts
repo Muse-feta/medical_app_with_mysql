@@ -1,4 +1,4 @@
-import "server-only";
+// import "server-only";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 var nodemailer = require("nodemailer");
