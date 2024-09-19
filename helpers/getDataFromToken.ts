@@ -1,19 +1,26 @@
 import { NextRequest } from "next/server";
 import Jwt from "jsonwebtoken";
 
-export const getDataFromToken = (req: NextRequest) => {
+export const getDataFromToken = async (req: NextRequest) => {
   try {
+    // Get cookies before async operations
     const cookies = req.cookies;
-    // console.log("Cookies received:", cookies);
-
     const token = cookies.get("token")?.value || "";
+
     if (!token) {
-      // console.error("Token not found in cookies");
       return null;
     }
 
-    const data: any = Jwt.verify(token, process.env.SECRET!);
-    // console.log("Data from getDataFromToken:", data);
+    // JWT verification, this is async-safe
+    const data = await new Promise((resolve, reject) => {
+      try {
+        const decoded = Jwt.verify(token, process.env.SECRET!);
+        resolve(decoded);
+      } catch (error) {
+        reject(error);
+      }
+    });
+
     return data;
   } catch (error: any) {
     console.error("Error in getDataFromToken:", error.message);
