@@ -2,10 +2,27 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/dbconfig/dbconfig";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 
+// Define the expected shape of userData
+interface UserData {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 export const GET = async (req: NextRequest) => {
   try {
-    // Get user data from token
-    const userData = await getDataFromToken(req);
+    // Get user data from token and assert its type
+    const userData = (await getDataFromToken(req)) as UserData | null;
+
+    if (!userData) {
+      return NextResponse.json({
+        success: false,
+        status: 401,
+        message: "Unauthorized",
+      });
+    }
+
     const userId = userData.id;
 
     // Start MySQL transaction manually
