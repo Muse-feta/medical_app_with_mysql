@@ -9,7 +9,7 @@ export const GET = async () => {
     response.cookies.set({
       name: "token",
       value: "",
-    //   maxAge: 0,
+      expires: new Date(0), // Expire the cookie immediately
     });
 
     return response;
