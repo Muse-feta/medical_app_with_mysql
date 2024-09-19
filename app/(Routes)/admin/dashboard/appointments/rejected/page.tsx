@@ -75,7 +75,7 @@ const DashboardOrders = () => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `/api/appointement/rejected`,
+          `/api/appointement/reject`,
           {
             cache: "no-store",
           }
