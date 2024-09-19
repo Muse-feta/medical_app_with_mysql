@@ -58,7 +58,11 @@ const DashboardUsers: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/users`);
+        const res = await axios.get(`/api/users`, {
+          headers: {
+            "Cache-Control": "no-store", // Disable caching
+          },
+        });
         setData(res.data.data);
       } catch (error) {
         console.error("Error fetching users data:", error);

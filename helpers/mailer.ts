@@ -76,6 +76,8 @@ export const mailer = async ({ email, emailType, userId }: any) => {
           : `<a href="${baseUrl}/reset-password?token=${hashedId}">Reset Password</a>`,
     };
 
+    console.log("mailOptions", mailOptions);
+
     transporter.sendMail(mailOptions, (error: any, info: any) => {
       if (error) {
         console.log(error);

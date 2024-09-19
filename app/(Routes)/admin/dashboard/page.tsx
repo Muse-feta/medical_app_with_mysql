@@ -16,7 +16,11 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/card-info`);
+        const res = await axios.get(`/api/card-info`, {
+          headers: {
+            "Cache-Control": "no-store", // Disable caching
+          },
+        });
         setCardData([
           {
             label: "Total Users",
@@ -50,7 +54,11 @@ const Dashboard = () => {
 
     const fetchRecentData = async () => {
       try {
-        const res = await axios.get(`/api/appointement/recent-appointement`);
+        const res = await axios.get(`/api/appointement/recent-appointement`, {
+          headers: {
+            "Cache-Control": "no-store", // Disable caching
+          },
+        });
         setRecentData(res.data.data);
       } catch (error) {
         console.log("Error", error);
