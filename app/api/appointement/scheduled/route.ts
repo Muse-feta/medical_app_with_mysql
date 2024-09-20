@@ -5,7 +5,7 @@ export const GET = async (req: NextRequest) => {
   try {
     // Fetch all accepted appointments directly from the pool
     const [appointmentsRows]: any[] = await pool.query(
-      "SELECT * FROM Appointment WHERE status = ? ORDER BY createdAt DESC",
+      "SELECT * FROM Appointment WHERE status = ? ORDER BY id DESC",
       ["ACCEPTED"]
     );
 
