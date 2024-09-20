@@ -1,12 +1,11 @@
-"use client";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { cn } from "@/lib/utils";
-// import type { Metadata } from "next";
+import type { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//   title: "Dashbored",
-//   description: "Dashbored by Muse Feta.",
-// };
+export const metadata: Metadata = {
+  title: "Dashbored",
+  description: "Dashbored by Muse Feta.",
+};
 
 export default function RootLayout({
   children,
