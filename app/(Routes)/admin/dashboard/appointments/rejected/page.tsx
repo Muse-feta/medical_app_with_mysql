@@ -3,19 +3,7 @@ import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 // Define the Payment type
 type Payment = {
@@ -65,29 +53,22 @@ const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-const DashboardOrders = () => {
-  const { userData } = useAuth();
-  const router = useRouter();
-  const [data, setData] = React.useState<Payment[]>([]);
+async function getRejectedOrders(): Promise<Payment[]> {
+  const response = await fetch(`/api/appointement/reject`, {
+    cache: "no-store", // Ensures no caching in both client and server
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  const result = await response.json();
+  return result.data;
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetch(
-          `/api/appointement/reject`,
-          {
-            cache: "no-store"
-          }
-        )
-        const res = await result.json();
-        console.log("res from reject", res.data);
-        setData(res.data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    };
-    fetchData();
-  }, []);
+const DashboardOrders = async () => {
+  const router = useRouter();
+
+  // Fetch data without useEffect
+  const data = await getRejectedOrders();
 
   const handleRowClick = (rowData: Payment) => {
     router.push(`/admin/dashboard/appointments/rejected/${rowData.id}`);
@@ -95,8 +76,7 @@ const DashboardOrders = () => {
 
   return (
     <div className="flex flex-col gap-5 w-full">
-      <DashboardTitle title="Rejected Orders" />{" "}
-      {/* Optional: Add a title component */}
+      <DashboardTitle title="Rejected Orders" />
       <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>
   );

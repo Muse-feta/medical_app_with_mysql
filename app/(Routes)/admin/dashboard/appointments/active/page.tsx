@@ -76,11 +76,7 @@ const DashboardOrders = () => {
       try {
         // const res = await axios.get(`/api/appointement`);
         // console.log("res", res.data.data);
-        const result = await fetch(`/api/appointement`,
-          {
-            cache: "force-cache"
-          }
-        );
+        const result = await fetch(`/api/appointement`);
         const res = await result.json()
         // console.log("this is active app res",res)
         // console.log("this is active app res 2", res.data);
