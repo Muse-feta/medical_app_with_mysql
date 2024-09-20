@@ -116,7 +116,7 @@ const DashboardOrders = () => {
           }
         )
         const res = await result.json()
-        // console.log("res", res.data.data);
+        console.log("res from scheduled", res.data);
         setData(res.data);
       } catch (error) {
         console.log("Error", error);
