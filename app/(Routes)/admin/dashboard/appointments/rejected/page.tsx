@@ -65,7 +65,10 @@ const DashboardOrders = () => {
       try {
         // const res = await axios.get(`/api/appointement`);
         // console.log("res", res.data.data);
-        const result = await fetch(`/api/appointement/reject`);
+        const result = await fetch(
+          `/api/appointement/reject?timestamp=${new Date().getTime()}`
+        );
+
         const res = await result.json();
         setData(res.data);
       } catch (error) {
