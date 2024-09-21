@@ -1,62 +1,45 @@
-
+import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 var nodemailer = require("nodemailer");
-import pool from "@/dbconfig/dbconfig"; // Assuming pool is your MySQL connection pool
-export const dynamic = "force-dynamic";
+import pool from "@/dbconfig/dbconfig";
 
 export const mailer = async ({ email, emailType, userId }: any) => {
   try {
     console.log("mailer", email, emailType, userId);
 
-    // JWT secret key
+    // Check for the JWT secret
     const secret = process.env.SECRET;
     if (!secret) {
       throw new Error("JWT secret is not defined");
     }
-    const data = {
-      id: userId,
-      email: email,
-    };
+
+    // Create JWT token
+    const data = { id: userId, email: email };
     const hashedId = jwt.sign(data, secret);
 
-    // Updating user verification token or forgot password token
-    let updateQuery: string;
-    let updateValues: any[];
-
+    // Update the user token in the MySQL database
     if (emailType === "VERIFY") {
-      updateQuery = `
-        UPDATE User
-        SET verifyToken = ?, verifyTokenExpiry = ?
-        WHERE id = ?
-      `;
-      updateValues = [
-        hashedId,
-        new Date(Date.now() + 1000 * 60 * 60 * 24),
-        userId,
-      ];
+      try {
+        await pool.query(
+          "UPDATE User SET verifyToken = ?, verifyTokenExpiry = ? WHERE id = ?",
+          [hashedId, new Date(Date.now() + 1000 * 60 * 60 * 24), userId]
+        );
+      } catch (error) {
+        console.log("Error updating user verification token", error);
+      }
     } else if (emailType === "RESET") {
-      updateQuery = `
-        UPDATE User
-        SET forgotPasswordToken = ?, forgotPasswordTokenExpiry = ?
-        WHERE id = ?
-      `;
-      updateValues = [
-        hashedId,
-        new Date(Date.now() + 1000 * 60 * 60 * 24),
-        userId,
-      ];
-    } else {
-      throw new Error("Invalid email type");
+      try {
+        await pool.query(
+          "UPDATE User SET forgotPasswordToken = ?, forgotPasswordTokenExpiry = ? WHERE id = ?",
+          [hashedId, new Date(Date.now() + 1000 * 60 * 60 * 24), userId]
+        );
+      } catch (error) {
+        console.log("Error updating user reset token", error);
+      }
     }
 
-    try {
-      await pool.query(updateQuery, updateValues);
-    } catch (error) {
-      console.log("Error updating user verification token", error);
-    }
-
-    // Sending email
-    const transporter = nodemailer.createTransport({
+    // Configure Nodemailer to send the email
+    var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: "fetamuse@gmail.com",
@@ -66,7 +49,7 @@ export const mailer = async ({ email, emailType, userId }: any) => {
 
     const baseUrl = process.env.BASE_URL;
 
-    const mailOptions = {
+    var mailOptions = {
       from: "Ethio Medical App",
       to: email,
       subject: emailType === "VERIFY" ? "Verify Email" : "Reset Password",
@@ -76,9 +59,8 @@ export const mailer = async ({ email, emailType, userId }: any) => {
           : `<a href="${baseUrl}/reset-password?token=${hashedId}">Reset Password</a>`,
     };
 
-    console.log("mailOptions", mailOptions);
-
-    transporter.sendMail(mailOptions, (error: any, info: any) => {
+    // Send the email
+    transporter.sendMail(mailOptions, function (error: any, info: any) {
       if (error) {
         console.log(error);
       } else {
