@@ -3,7 +3,7 @@ import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 
@@ -56,22 +56,20 @@ const columns: ColumnDef<Payment>[] = [
 ];
 
 const RejectedAppointements = () => {
-  const { userData } = useAuth(); // Ensure AuthContext is working
+  const { userData } = useAuth();
   const router = useRouter();
-  const [data, setData] = useState<Payment[]>([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [data, setData] = React.useState<Payment[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // const res = await axios.get(`/api/appointement`);
+        // console.log("res", res.data.data);
         const result = await fetch(`/api/appointement/reject`);
-        if (!result.ok) throw new Error(`Error fetching: ${result.statusText}`);
         const res = await result.json();
         setData(res.data);
       } catch (error) {
         console.log("Error", error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchData();
@@ -81,22 +79,15 @@ const RejectedAppointements = () => {
     router.push(`/admin/dashboard/appointments/rejected/${rowData.id}`);
   };
 
-  // If loading, show a loading message
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  // If no data is returned
-  if (data.length === 0) {
-    return <p>No rejected appointments found.</p>;
-  }
-
   return (
     <div className="flex flex-col gap-5 w-full">
-      <DashboardTitle title="Rejected Orders" />
+      <DashboardTitle title="Rejected Orders" />{" "}
+      {/* Optional: Add a title component */}
       <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>
   );
 };
 
 export default RejectedAppointements;
+
+
