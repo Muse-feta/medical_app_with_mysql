@@ -12,7 +12,7 @@ type Payment = {
   id: number;
   patientName: string;
   phoneNumber: string;
-  status: "PENDING" | "ACCEPTED" | "REJECTED";
+  status: "REJECTED";
   email: string;
 };
 
