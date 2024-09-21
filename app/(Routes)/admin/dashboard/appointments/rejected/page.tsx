@@ -55,7 +55,7 @@ const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-const DashboardOrders = () => {
+const RejectedAppointements = () => {
   const { userData } = useAuth();
   const router = useRouter();
   const [data, setData] = React.useState<Payment[]>([]);
@@ -65,10 +65,7 @@ const DashboardOrders = () => {
       try {
         // const res = await axios.get(`/api/appointement`);
         // console.log("res", res.data.data);
-        const result = await fetch(
-          `/api/appointement/reject?timestamp=${new Date().getTime()}`
-        );
-
+        const result = await fetch(`/api/appointement/reject`);
         const res = await result.json();
         setData(res.data);
       } catch (error) {
@@ -91,6 +88,6 @@ const DashboardOrders = () => {
   );
 };
 
-export default DashboardOrders;
+export default RejectedAppointements;
 
 
