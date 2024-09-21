@@ -2,6 +2,8 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 var nodemailer = require("nodemailer");
 import pool from "@/dbconfig/dbconfig";
+export const dynamic = "force-dynamic";
+
 
 export const mailer = async ({ email, emailType, userId }: any) => {
   try {
