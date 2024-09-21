@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/dbconfig/dbconfig";
 
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   try {
     // Query to get appointments with status 'REJECTED' ordered by creation date in descending order
