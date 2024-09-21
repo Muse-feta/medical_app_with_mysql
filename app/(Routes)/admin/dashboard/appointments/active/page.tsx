@@ -1,22 +1,11 @@
 "use client";
-export const dynamic = "force-dynamic";
 import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 // Define the Payment type
 type Payment = {
@@ -77,10 +66,7 @@ const DashboardOrders = () => {
         // const res = await axios.get(`/api/appointement`);
         // console.log("res", res.data.data);
         const result = await fetch(`/api/appointement`);
-        const res = await result.json()
-        // console.log("this is active app res",res)
-        // console.log("this is active app res 2", res.data);
-        // setData(res.data.data);
+        const res = await result.json();
         setData(res.data);
       } catch (error) {
         console.log("Error", error);
@@ -102,4 +88,7 @@ const DashboardOrders = () => {
   );
 };
 
+
 export default DashboardOrders;
+
+
