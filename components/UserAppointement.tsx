@@ -1,10 +1,7 @@
 "use client";
-export const dynamic = "force-dynamic";
-import DashboardTitle from "@/components/ui/dashboardTitle";
 import { DataTable } from "@/components/ui/DataTable";
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
 
