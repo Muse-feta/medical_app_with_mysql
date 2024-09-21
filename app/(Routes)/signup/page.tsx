@@ -1,3 +1,4 @@
+"use client";
 import Breadcumb from '@/components/Breadcumb'
 import SignUpForm from '@/components/signup/SignUpForm'
 import React from 'react'

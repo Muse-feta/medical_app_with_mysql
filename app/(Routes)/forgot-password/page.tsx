@@ -1,3 +1,4 @@
+"use client";
 import Breadcumb from '@/components/Breadcumb';
 import ForgotPassword from '@/components/ForgotPassword';
 import React from 'react'
