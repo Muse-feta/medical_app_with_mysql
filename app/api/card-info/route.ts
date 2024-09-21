@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/dbconfig/dbconfig";
+export const dynamic = "force-dynamic";
 
 export const GET = async () => {
   try {

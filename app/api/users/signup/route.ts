@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import bcryptjs from "bcryptjs";
 import { mailer } from "@/helpers/mailer";
 import pool from "@/dbconfig/dbconfig"; // Your MySQL connection config
+export const dynamic = "force-dynamic";
 
 export const POST = async (req: NextRequest) => {
   try {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/dbconfig/dbconfig";
-
+export const dynamic = "force-dynamic";
 // POST: Create a new appointment
 export const POST = async (req: NextRequest) => {
   try {
@@ -42,6 +42,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 };
+
 
 // GET: Fetch all pending appointments
 export const GET = async (req: NextRequest) => {
