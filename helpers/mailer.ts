@@ -1,8 +1,8 @@
-// import "server-only";
-import bcryptjs from "bcryptjs";
+
 import jwt from "jsonwebtoken";
 var nodemailer = require("nodemailer");
 import pool from "@/dbconfig/dbconfig"; // Assuming pool is your MySQL connection pool
+export const dynamic = "force-dynamic";
 
 export const mailer = async ({ email, emailType, userId }: any) => {
   try {
