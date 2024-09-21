@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 import DashboardTitle from "@/components/ui/dashboardTitle";
 import axios from "axios";
 import { useRouter } from "next/navigation";

@@ -81,7 +81,7 @@ const DashboardOrders = () => {
 
   return (
     <div className="flex flex-col gap-5 w-full">
-      <DashboardTitle title="Rejected Orders" />{" "}
+      <DashboardTitle title="Rejected Orders" />
       {/* Optional: Add a title component */}
       <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>

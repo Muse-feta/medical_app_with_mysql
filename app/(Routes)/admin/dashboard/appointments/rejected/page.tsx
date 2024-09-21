@@ -65,7 +65,10 @@ const RejectedAppointements = () => {
       try {
         // const res = await axios.get(`/api/appointement`);
         // console.log("res", res.data.data);
-        const result = await fetch(`/api/appointement/reject`);
+        const result = await fetch(`/api/appointement/reject`, {
+          method: "GET",
+          cache: "no-store",
+        });
         const res = await result.json();
         setData(res.data);
       } catch (error) {
