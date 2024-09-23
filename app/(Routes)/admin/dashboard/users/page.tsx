@@ -15,6 +15,7 @@ type Payment = {
   email: string;
   phone: string;
   role: string;
+  isVerified: boolean;
 };
 
 // Define the columns for the DataTable
@@ -49,6 +50,15 @@ const columns: ColumnDef<Payment, any>[] = [
     accessorKey: "role",
     header: "Role",
   },
+  {
+    accessorKey: "isVerified",
+    header: "Is Verified",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        <span>{row.getValue("isVerified") ? "Yes" : "No"}</span>
+      </div>
+    ),
+  },
 ];
 
 const DashboardUsers: React.FC = () => {
@@ -62,6 +72,7 @@ const DashboardUsers: React.FC = () => {
           cache: "no-store",
         })
         const res = await result.json();
+        console.log("user data",res.data);
         setData(res.data);
       } catch (error) {
         console.error("Error fetching users data:", error);

@@ -24,11 +24,22 @@ const Page = ({ params }: { params: Params }) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`/api/users/delete-user/${userId}`);
+      console.log(response.data);
+      toast.success("User deleted successfully");
+      router.push("/admin/dashboard/users");
+    } catch (error: any) {
+      console.error("Error accepting appointment:", error);
+    }
+  };
+
   return (
     <div>
       <div>
         <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Change Role</h2>
+          <h2 className="text-xl font-semibold mb-4">Change User Status</h2>
           <p className="flex justify-center items-center">
             If you want to change the role of the user
           </p>
@@ -38,7 +49,18 @@ const Page = ({ params }: { params: Params }) => {
             // type="submit"
             className="w-full py-2 px-4 bg-[#2bb757] text-white font-semibold rounded-lg shadow-md hover:bg-[#0ba933] focus:outline-none focus:ring-2 focus:ring-green-500"
           >
-            Change Role
+            Change User Role
+          </button>
+          <p className="flex justify-center items-center mt-3">
+            If you want to delete the user
+          </p>
+          <button
+            onClick={handleDelete}
+            // disabled={isSubmitting}
+            // type="submit"
+            className="w-full py-2 px-4 bg-[#f75959] text-white font-semibold rounded-lg shadow-md hover:bg-[#a90b0b] focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            Delete User
           </button>
         </div>
         <Toaster position="top-left" richColors />
