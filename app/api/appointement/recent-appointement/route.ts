@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/dbconfig/dbconfig";
+export const dynamic = "force-dynamic";
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   try {
     // Get current date and time
     const now = new Date();
