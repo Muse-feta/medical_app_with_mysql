@@ -3,6 +3,7 @@ import Image from "next/image";
 import "@/asset/css/app.min.css";
 import "@/asset/css/style.css";
 import "@/asset/css/fontawesome.min.css";
+import logo from "@/asset/img/medical-logo-no-bg.png"
 
 const Footer = () => {
   return (
@@ -14,33 +15,28 @@ const Footer = () => {
               <div className="widget footer-widget">
                 <div className="th-widget-about">
                   <div className="about-logo">
-                    <a href="home-medical-clinic.html">
-                      <Image
-                        src="/assets/img/logo-footer.svg"
-                        alt="Mediax"
-                        width={150}
-                        height={50}
-                      />
+                    <a href="/">
+                      <Image src={logo} alt="Mediax" width={150} height={50} />
                     </a>
                   </div>
                   <p className="about-text">
-                    Subscribe to our newsletter today to receive the latest news
-                    and updates on cost-effective solutions for tactical data.
+                    Ethio Medical Clinic is dedicated to providing high-quality
+                    healthcare with great attention and care.
                   </p>
                   <p className="footer-info">
-                    <i className="fal fa-location-dot"></i> 2478 Street City
-                    Ohio 90255
+                    <i className="fal fa-location-dot"></i> Addis Ababa,
+                    Ethiopia
                   </p>
                   <p className="footer-info">
                     <i className="fal fa-envelope"></i>
                     <a href="mailto:info@mediax.com" className="info-box_link">
-                      info@mediax.com
+                      info@ethiomedicalapp.com
                     </a>
                   </p>
                   <p className="footer-info">
                     <i className="fal fa-phone"></i>
-                    <a href="tel:+40276328246" className="info-box_link">
-                      +(402) 763 282 46
+                    <a href="tel:+251985322632" className="info-box_link">
+                      +2519 85 32 26 32
                     </a>
                   </p>
                 </div>
@@ -52,25 +48,25 @@ const Footer = () => {
                 <div className="menu-all-pages-container">
                   <ul className="menu">
                     <li>
-                      <a href="about.html">About Us</a>
+                      <a >About Us</a>
                     </li>
                     <li>
-                      <a href="about.html">Terms of Use</a>
+                      <a >Terms of Use</a>
                     </li>
                     <li>
-                      <a href="service.html">Our Services</a>
+                      <a >Our Services</a>
                     </li>
                     <li>
-                      <a href="faq.html">Help & FAQs</a>
+                      <a >Help & FAQs</a>
                     </li>
                     <li>
-                      <a href="blog.html">Blog</a>
+                      <a>Blog</a>
                     </li>
                     <li>
-                      <a href="about.html">Privacy policy</a>
+                      <a>Privacy policy</a>
                     </li>
                     <li>
-                      <a href="contact.html">Contact Us</a>
+                      <a>Contact Us</a>
                     </li>
                   </ul>
                 </div>
@@ -82,25 +78,25 @@ const Footer = () => {
                 <div className="menu-all-pages-container">
                   <ul className="menu">
                     <li>
-                      <a href="service-details.html">Cardiology Care</a>
+                      <a>Cardiology Care</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Urgent Care</a>
+                      <a>Urgent Care</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Orthopedic Care</a>
+                      <a>Orthopedic Care</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Diagnosis Department</a>
+                      <a>Diagnosis Department</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Gastroenterology</a>
+                      <a >Gastroenterology</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Therapy Department</a>
+                      <a >Therapy Department</a>
                     </li>
                     <li>
-                      <a href="service-details.html">Dental Service</a>
+                      <a >Dental Service</a>
                     </li>
                   </ul>
                 </div>
@@ -115,9 +111,10 @@ const Footer = () => {
             <div className="col-md-7">
               <p className="copyright-text">
                 Copyright <i className="fal fa-copyright"></i> 2024
-                <a href="home-medical-clinic.html">Mediax</a>. All Rights
+                <a href="home-medical-clinic.html">Ethio Medical App</a>. All Rights
                 Reserved.
               </p>
+              <p className="copyright-text">Developed by Muse Feta</p>
             </div>
             <div className="col-md-5 text-center text-md-end">
               <div className="th-social">

@@ -22,9 +22,7 @@ const Hero = () => {
       <div className="hero-inner">
         <div className="container">
           <div className="hero-style2">
-            <span className="sub-title mt-6">
-              24/7 Emergency Service
-            </span>
+            <span className="sub-title mt-6">24/7 Emergency Service</span>
             <h1 className="hero-title2">
               <span className="title1">
                 Caring for <span className="line-text">Health</span>
@@ -32,15 +30,17 @@ const Hero = () => {
               <span className="title2">Caring for You</span>
             </h1>
             <p className="hero-text">
-              A brief statement outlining the purpose and mission of the clinic.
-              This can include the commitment to patient care, community health.
+              Ethio Medical Clinic is dedicated to providing high-quality
+              healthcare with great attention and care. We are committed to
+              improving community health by offering professional services and
+              showing excellence in our work.
             </p>
             <div className="btn-group justify-content-center">
-              <a href="about.html" className="th-btn">
-                Discover More
+              <a href="/signup" className="th-btn">
+                Register
               </a>
-              <a href="service.html" className="th-btn style4">
-                See All Services
+              <a href="/appointement" className="th-btn style4">
+                Make Appointement
               </a>
             </div>
           </div>

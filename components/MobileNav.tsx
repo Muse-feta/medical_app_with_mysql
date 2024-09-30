@@ -39,52 +39,45 @@ const MobileNav = (props: Props) => {
         <SheetContent className="mt-[20px]">
           <SheetHeader>
             <SheetTitle className="mt-[20px]">
-              Are you absolutely sure?
+              {isLogedIn && <p> Wellcome: {userData?.firstName}</p>}
             </SheetTitle>
             <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              Ethio Medical Clinic is dedicated to providing high-quality
+              healthcare with great attention and care
             </SheetDescription>
           </SheetHeader>
           <nav className="mt-20">
-            <ul className=" list-none gap-5 text-black">
-              <li className="">
+            <ul className="list-none gap-5 text-black">
+              <li className="mb-2 border-b border-gray-300 py-2">
                 <Link href="/">Home</Link>
               </li>
-              <li className="mt-2">
+              <li className="mt-2 border-b border-gray-300 py-2">
                 <Link href="/about">About Us</Link>
               </li>
-              <li className="mt-2">
-                <Link href="/appointement">Appointement</Link>
+              <li className="mt-2 border-b border-gray-300 py-2">
+                <Link href="/appointment">Appointment</Link>
               </li>
-              <li className="mt-2">
+              <li className="mt-2 border-b border-gray-300 py-2">
                 <Link href="/contact">Contact</Link>
               </li>
               {isAdmin && (
-                <li>
+                <li className="mt-2 border-b border-gray-300 py-2">
                   <Link href="/admin/dashboard">Admin</Link>
                 </li>
               )}
-              <li>
+              <li className="mt-2 border-b border-gray-300 py-2">
                 {isLogedIn ? (
-                  <a className=" cursor-pointer" onClick={handleLogout}>
+                  <a className="cursor-pointer" onClick={handleLogout}>
                     Logout
                   </a>
                 ) : (
                   <Link href="/login">Login</Link>
                 )}
               </li>
-              <li className="">
-                <Popover>
-                  <PopoverTrigger>
-                    <CircleUser className="w-8 h-8" />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    {isLogedIn && <p> Wellcome: {userData?.firstName}</p>}
-                    <p> Email: {userData?.email}</p>
-                    <Link href="/dashboard">View Appointments</Link>
-                  </PopoverContent>
-                </Popover>
+              <li className="mt-2 border-b border-gray-300 py-2">
+                {isLogedIn ? (
+                  <Link href="/dashboard">View Appointments</Link>
+                ) : null}
               </li>
             </ul>
           </nav>

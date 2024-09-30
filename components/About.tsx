@@ -24,11 +24,11 @@ const About = () => {
                 <Image src={about_1} alt="about" />
               </div>
               <div className="about-info">
-                <h3 className="box-title">Dr. Esita Jabed</h3>
+                <h3 className="box-title">Dr. Abel Lema</h3>
                 <p className="box-text">
-                  Mention the languages
+                  Cardiologis
                   <br />
-                  in which the staff.
+                  MBBS, FCPS
                 </p>
                 <div className="box-review">
                   <i className="fa-sharp fa-solid fa-star"></i>
@@ -37,8 +37,8 @@ const About = () => {
                   <i className="fa-sharp fa-solid fa-star"></i>
                   <i className="fa-sharp fa-solid fa-star"></i>
                 </div>
-                <a href="tel:+16356478965" className="box-link">
-                  <i className="fa-solid fa-phone"></i> +163 564 78965
+                <a href="tel:+251985322632" className="box-link">
+                  <i className="fa-solid fa-phone"></i> +251985322632
                 </a>
               </div>
             </div>
@@ -46,22 +46,22 @@ const About = () => {
           <div className="col-xl-6">
             <div className="ps-xxl-4 ms-xl-2 text-center text-xl-start">
               <div className="title-area mb-32">
-                <span className="sub-title">
-                  
-                  About Us Company
-                </span>
+                <span className="sub-title">About Us Company</span>
                 <h2 className="sec-title">Affordable Health Care Solutions</h2>
                 <p className="sec-text">
-                  A brief statement outlining the purpose and mission of the
-                  clinic. This can include the commitment to patient care,
-                  community health, and any specifical goals for our values.
+                  Ethio Medical App is designed to provide accessible and
+                  affordable healthcare services to patients across Ethiopia.
+                  Our app simplifies the process of booking medical
+                  appointments, accessing professional healthcare providers, and
+                  managing patient information, all in one place.
                 </p>
               </div>
               <div className="mb-30 mt-n1">
                 <div className="checklist style2 list-two-column">
                   <ul>
                     <li>
-                      <i className="fas fa-heart-pulse"></i> Medical Professionals
+                      <i className="fas fa-heart-pulse"></i> Medical
+                      Professionals
                     </li>
                     <li>
                       <i className="fas fa-heart-pulse"></i> Facilities and
@@ -83,8 +83,8 @@ const About = () => {
                 </div>
               </div>
               <div>
-                <a href="about.html" className="th-btn">
-                  More About Us
+                <a href="/login" className="th-btn">
+                  Login
                 </a>
               </div>
             </div>

@@ -25,10 +25,7 @@ const firstSection = () => {
         <div className="row justify-content-center">
           <div className="col-lg-7 col-md-8">
             <div className="title-area text-center">
-              <span className="sub-title">
-                
-                About Our Company
-              </span>
+              <span className="sub-title">About Our Company</span>
               <h2 className="sec-title">
                 Taking Care of Your Health is Our Top Priority
               </h2>
@@ -65,16 +62,18 @@ const firstSection = () => {
             <div className="ps-xxl-4 ms-xl-2 text-center text-xl-start">
               <div className="title-area mb-32">
                 <p className="sec-text mt-n2">
-                  A brief statement outlining the purpose and mission of the
-                  clinic. This can include the commitment to patient care,
-                  community health, and any specifical goals for our values.
+                  Ethio Medical Clinic is dedicated to providing high-quality
+                  healthcare with great attention and care. We are committed to
+                  improving community health by offering professional services
+                  and showing excellence in our work
                 </p>
               </div>
               <div className="mb-25 mt-n1">
                 <div className="checklist style2 list-two-column">
                   <ul>
                     <li>
-                      <i className="fas fa-heart-pulse"></i> Medical Professionals
+                      <i className="fas fa-heart-pulse"></i> Medical
+                      Professionals
                     </li>
                     <li>
                       <i className="fas fa-heart-pulse"></i> Facilities and
@@ -90,14 +89,13 @@ const firstSection = () => {
                 </div>
               </div>
               <div>
-                <a href="about.html" className="th-btn">
-                  More About Us
+                <a href="/signup" className="th-btn">
+                  Sign Up Now
                 </a>
               </div>
               <div className="about-video-wrap">
                 <div className="th-video about-video">
                   <Image src={about2} alt="video" />
-                 
                 </div>
                 <div className="box-content">
                   <p className="box-text">
@@ -111,14 +109,16 @@ const firstSection = () => {
                       <p className="box-label">Support Line 24/7</p>
                       <h3 className="box-title">
                         <i className="fal fa-envelope"></i>
-                        <a href="mailto:info@contact.com">info@contact.com</a>
+                        <a href="mailto:info@contact.com">
+                          info@ethiomedicalapp.com
+                        </a>
                       </h3>
                     </div>
                     <div className="about-contact">
                       <p className="box-label">Online Schedule</p>
                       <h3 className="box-title">
                         <i className="fal fa-calendar-alt"></i>
-                        <a href="contact.html">Book Here</a>
+                        <a href="/appointement">Book Here</a>
                       </h3>
                     </div>
                   </div>

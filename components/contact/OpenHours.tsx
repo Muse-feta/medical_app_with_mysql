@@ -9,25 +9,26 @@ const OpenHours = () => {
       <div className="space">
         <div className="container">
           <div className="row gy-4">
-            
-          {/* open hours card starts here */}
+            {/* open hours card starts here */}
             <div className="col-xl-12 col-md-12">
               <div className="location-card">
-                <h3 className="box-title">Australia Branch</h3>
+                <h3 className="box-title">Our Location</h3>
                 <p className="footer-info">
-                  <i className="far fa-location-dot"></i> 260 Lygon St, Brunswick
-                  East VIC 3057, Australia
+                  <i className="far fa-location-dot"></i> Addis Ababa, Ethiopia
                 </p>
                 <p className="footer-info">
                   <i className="far fa-envelope"></i>
-                  <a href="mailto:info@contactaus.com" className="info-box_link">
-                    info@contactaus.com
+                  <a
+                    href="mailto:info@contactaus.com"
+                    className="info-box_link"
+                  >
+                    info@ethiomedicalapp.com
                   </a>
                 </p>
                 <p className="footer-info">
                   <i className="far fa-phone"></i>
-                  <a href="tel:+61399882015" className="info-box_link">
-                    +613 9988 2015
+                  <a href="tel:+251985322632" className="info-box_link">
+                    +2519 85 32 26 32
                   </a>
                 </p>
               </div>

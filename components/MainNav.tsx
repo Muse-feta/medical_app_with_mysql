@@ -35,7 +35,7 @@ const MainNav = (props: Props) => {
             <Link href="/about">About Us</Link>
           </li>
           <li className="">
-            <Link href="/appointement">Appointements</Link>
+            <Link href="/appointement">Appointement</Link>
           </li>
           <li>
             <Link href="/contact">Contact</Link>

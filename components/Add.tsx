@@ -20,24 +20,25 @@ const Add = () => {
                 We’re welcoming new patients and can’t wait to meet you!
               </h2>
               <p className="sec-text text-white">
-                A brief statement outlining the purpose and mission of the
-                clinic. This can include the commitment to patient care,
-                community health, and any specific goals or values. Specify the
-                types of medical services provided
+                We’re excited to welcome new patients to Ethio Medical! Our
+                dedicated team is here to provide personalized, high-quality
+                care tailored to your needs. Whether you're looking for routine
+                check-ups, specialized treatments, or consultations with our
+                expert doctors, we're ready to support your health journey.
               </p>
             </div>
             <div className="btn-group justify-content-center">
-              <a href="contact.html" className="th-btn shadow-1">
+              <a href="/appointement" className="th-btn shadow-1">
                 Book Appointment
               </a>
-              <a href="contact.html" className="th-btn style2 shadow-1">
-                Get Free Consulting
+              <a href="/contact" className="th-btn style2 shadow-1">
+                Contact Us
               </a>
             </div>
           </div>
           <div className="col-xl-5">
             <div className="">
-              <div className='h-100'>
+              <div className="h-100">
                 <Image src={cta} alt="cta" />
               </div>
             </div>

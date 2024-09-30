@@ -34,9 +34,7 @@ const Services = () => {
           <div className="col-lg-6 col-md-8">
             <div className="title-area text-center">
               <span className="sub-title">Our Services</span>
-              <h2 className="sec-title">
-                Our Mediax specialties Technical service
-              </h2>
+              <h2 className="sec-title">Our Ethio Mdical Clinic service</h2>
             </div>
           </div>
         </div>
@@ -53,15 +51,15 @@ const Services = () => {
                 <Image src={card1} alt="Icon" />
               </div>
               <h3 className="box-title">
-                <a href="service-details.html">Internal Medicine</a>
+                <a>Internal Medicine</a>
               </h3>
               <p className="box-text">30+ Doctors</p>
-              <a
+              {/* <a
                 href="service-details.html"
                 className="th-btn btn-sm style2 theme-color"
               >
                 Read More
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -77,15 +75,15 @@ const Services = () => {
                 <Image src={card2} alt="Icon" />
               </div>
               <h3 className="box-title">
-                <a href="service-details.html">Dental Care</a>
+                <a>Dental Care</a>
               </h3>
               <p className="box-text">20+ Doctors</p>
-              <a
+              {/* <a
                 href="service-details.html"
                 className="th-btn btn-sm style2 theme-color"
               >
                 Read More
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -101,15 +99,15 @@ const Services = () => {
                 <Image src={card3} alt="Icon" />
               </div>
               <h3 className="box-title">
-                <a href="service-details.html">Urology Care</a>
+                <a>Urology Care</a>
               </h3>
               <p className="box-text">20+ Doctors</p>
-              <a
+              {/* <a
                 href="service-details.html"
                 className="th-btn btn-sm style2 theme-color"
               >
                 Read More
-              </a>
+              </a> */}
             </div>
           </div>
           <div className="col-xl-3 col-lg-4 col-sm-6">
@@ -124,15 +122,15 @@ const Services = () => {
                 <Image src={card4} alt="Icon" />
               </div>
               <h3 className="box-title">
-                <a href="service-details.html">Neurology Care</a>
+                <a>Neurology Care</a>
               </h3>
               <p className="box-text">10+ Doctors</p>
-              <a
+              {/* <a
                 href="service-details.html"
                 className="th-btn btn-sm style2 theme-color"
               >
                 Read More
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -235,9 +233,9 @@ const Services = () => {
         <div className="mt-5 pt-2 space-extra-bottom">
           <p className="round-text">
             <span className="text">
-              You Get Our 20+ More services...
-              <a href="service.html" className="line-btn">
-                Explore All Services
+              Discover Your Appointements
+              <a href="/dashboard" className="line-btn">
+                View All
               </a>
             </span>
           </p>

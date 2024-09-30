@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import SearchBar from "@/components/SearchBar";
 
 // Define the Payment type
 type Payment = {
@@ -86,8 +87,9 @@ const DashboardUsers: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5 w-full">
+    <div>
       <DashboardTitle title="Users" />
+      <SearchBar/>
       <DataTable columns={columns} data={data} onRowClick={handleRowClick} />
     </div>
   );
